@@ -36,6 +36,8 @@ public class Player_Ctrl : MonoBehaviourPunCallbacks, IPunObservable
     
     public string PlayerName = "";
 
+    public bool bStart = true;
+
     // 카메라를 붙일 지점
     public GameObject CameraTargetRoot;
 
@@ -117,6 +119,7 @@ public class Player_Ctrl : MonoBehaviourPunCallbacks, IPunObservable
         m_Animation = gameObject.AddComponent<M_Animation>();
 
         m_Interaction = gameObject.AddComponent<M_Interaction>();
+        m_Interaction.OwnerPlayer = this;
 
 
         // 플레이어의 상태
@@ -264,14 +267,33 @@ public class Player_Ctrl : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             #region 원격 움직임
+
+            
+
             // 회전 보간
             transform.rotation = Quaternion.Lerp(transform.rotation, NetworkRot, Time.deltaTime * 10f);
 
-            // 위치 보간
-            Vector3 targetPos = NetworkPos - transform.position;
+            
 
-            Controller.Move(targetPos.normalized * (Speed * Time.deltaTime) +
-                                 new Vector3(0.0f, -2, 0.0f) * Time.deltaTime);
+            if(Speed <0.01f)
+            {
+                transform.position = NetworkPos;
+            }
+            else
+            {
+                if (bStart)
+                {
+                    bStart = false;
+                    transform.position = NetworkPos;
+                }
+
+                // 위치 보간
+                Vector3 targetPos = NetworkPos - transform.position;
+
+                Controller.Move(targetPos.normalized * (Speed * Time.deltaTime) +
+                                     new Vector3(0.0f, -2, 0.0f) * Time.deltaTime);
+            }
+                
 
             // 애니메이션
             if (m_Animation)
@@ -386,7 +408,7 @@ public class Player_Ctrl : MonoBehaviourPunCallbacks, IPunObservable
         }
 
 
-        m_Animation.IsSit = false; // 앉는 애니메이션 실행
+        m_Animation.IsSit = false; // 일어나도록 애니메이션 실행
         PlayerState = EPlayerState.NotReady; // 상태 수정
         UICanvas_Mgr.Inst.SetUIType(EUIType.Play); // UI 업데이트
 

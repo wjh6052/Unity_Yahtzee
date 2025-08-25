@@ -162,9 +162,45 @@ public class UICanvas_Mgr : MonoBehaviourPunCallbacks
     // 주사위 굴리기 버튼 클릭시 호출
     void DiceRollButtonOnClick()
     {
-        // 방장에게 주사위 굴리기 호출
-        Table_Mgr.Inst.RequestDiceRoll();
-        SetDiceRollButton(false);
+        bool isFrst = true;
+
+        foreach (Dice_Ctrl dice in Table_Mgr.Inst.DiceList)
+        {
+            if (dice != null)
+            {
+                isFrst = false;
+            }
+        }
+
+
+        if (isFrst) // 처음 굴렸을때
+        {
+            // 방장에게 주사위 굴리기 호출
+            Table_Mgr.Inst.RequestDiceRoll();
+            SetDiceRollButton(false);
+        }
+        else // 다시 굴릴때
+        {
+            bool bAllHeld = true;
+
+            foreach (Dice_Ctrl dice in Table_Mgr.Inst.DiceList)
+            {
+                if (dice)
+                {
+                    if (dice.m_IsHeld == false)
+                    {
+                        bAllHeld = false;
+                        break;
+                    }
+                }
+            }
+
+            if (bAllHeld) return;
+
+            // 방장에게 주사위 굴리기 호출
+            Table_Mgr.Inst.RequestDiceRoll();
+            SetDiceRollButton(false);
+        }
     }
 
     public void SetDiceRollButton(bool IsOn)

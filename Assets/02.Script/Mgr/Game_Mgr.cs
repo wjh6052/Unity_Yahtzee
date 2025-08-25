@@ -11,7 +11,7 @@ public class Game_Mgr : MonoBehaviourPunCallbacks
 
     public List<Player_Ctrl> PlayerList = new List<Player_Ctrl>();
 
-    [HideInInspector] public Player_Ctrl LocalPlayer = null;
+    public Player_Ctrl LocalPlayer = null;
 
     public static Game_Mgr Inst;
 

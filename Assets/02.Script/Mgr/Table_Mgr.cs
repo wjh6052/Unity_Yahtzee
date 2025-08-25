@@ -218,7 +218,7 @@ public class Table_Mgr : MonoBehaviourPunCallbacks
 
     // 주사위 설정
     public Transform DiceSpawnPoint = null; // 주사위 스폰 지점
-    Dice_Ctrl[] DiceList = new Dice_Ctrl[5];   // 주사위들을 저장할 변수
+    public Dice_Ctrl[] DiceList = new Dice_Ctrl[5];   // 주사위들을 저장할 변수
     List<Vector3> DiceStopPos = new List<Vector3>();    // 주사위가 다 멈춘 후 카메라에 보일 위치
     List<Vector3> DiceHeldPos = new List<Vector3>();    // 주사위를 선택했을때 이동할 위치
 
@@ -470,16 +470,12 @@ public class Table_Mgr : MonoBehaviourPunCallbacks
             if (DiceList[i].DiceValue == -1) return;
         }
 
-        // 주사위를 카메라 앞으로 이동
-        StartCoroutine(Co_MoveDiceToCamera());
 
-        // 족보 체크
-        List<int> scoresList = CalculateScores(DiceList);
-
-
-        // UI를 업데이트 및 현재 턴인 플레이어 점수 적용을 모두에게 호출
-        pv.RPC("RPC_UpdateYahtzeeScoreUI", RpcTarget.All, scoresList.ToArray());
+        StartCoroutine(Co_StopDice());
+        
     }
+
+
 
     // 족보 체크 후 List<int>를 리턴
     public List<int> CalculateScores(Dice_Ctrl[] InDiceList)
@@ -594,9 +590,10 @@ public class Table_Mgr : MonoBehaviourPunCallbacks
 
             // 중앙 원형 배치 관련 설정
             float radiusPx = 130f * scale; // 원형 반지름(px)
-            Vector2 centerScreen = new Vector2(cam.pixelWidth / 2f, cam.pixelHeight / 2f); // 화면 중앙(px)
+            Vector2 centerScreen = new Vector2(cam.pixelWidth / 1.7f, cam.pixelHeight / 2f); // 원형의 중심(px)
 
             // 화면 위쪽 가로 정렬 관련 설정
+            Vector2 topCenter = new Vector2(cam.pixelWidth / 2.2f, cam.pixelHeight / 2f); // 상단의 중앙(px)
             float heldSpacingPx = 150f * scale;        // 주사위 간격(px)
             float verticalHeldOffsetPx = 80f * scale; // 화면 상단에서 내려오는 거리(px)
             float heldStartOffsetPx = -((5 - 1) * 0.5f * heldSpacingPx); // 첫 주사위 시작 X 오프셋(px)
@@ -618,7 +615,7 @@ public class Table_Mgr : MonoBehaviourPunCallbacks
 
                 // -------- 화면 위쪽 가로 정렬 --------
                 {
-                    float heldX = centerScreen.x + heldStartOffsetPx + i * heldSpacingPx + heldRightOffsetPx;
+                    float heldX = topCenter.x + heldStartOffsetPx + i * heldSpacingPx + heldRightOffsetPx;
                     float heldY = cam.pixelHeight - verticalHeldOffsetPx;
 
                     Vector3 screenPosHeld = new Vector3(heldX, heldY, zWorld);
@@ -674,6 +671,21 @@ public class Table_Mgr : MonoBehaviourPunCallbacks
 
             
         }
+    }
+
+    IEnumerator Co_StopDice()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        // 주사위를 카메라 앞으로 이동
+        StartCoroutine(Co_MoveDiceToCamera());
+
+        // 족보 체크
+        List<int> scoresList = CalculateScores(DiceList);
+
+
+        // UI를 업데이트 및 현재 턴인 플레이어 점수 적용을 모두에게 호출
+        pv.RPC("RPC_UpdateYahtzeeScoreUI", RpcTarget.All, scoresList.ToArray());
     }
 
     #endregion
