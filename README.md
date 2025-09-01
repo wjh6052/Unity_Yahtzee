@@ -7,7 +7,7 @@
 <img alt="image" src="https://github.com/user-attachments/assets/b022b12e-3836-4bdc-a6d9-c902d5d500b7" />
 
   ***
-[플레이 영상]( )
+[플레이 영상 (제작중)]( )
 
 ***
 
