@@ -44,11 +44,11 @@
 ***  
 
 ## 1. 시스템 구조
-<details>
-  <summary>시스템 구조</summary>
-
-<details>
-  <summary>매니저 스크립트</summary>
+<details open>
+  <summary>시스템 구조 (접기 / 펼치기)</summary>
+ 
+<details open>
+  <summary>매니저 스크립트 (접기 / 펼치기)</summary>
 
 - Game_Mgr
     - 로컬 플레이어의 데이터와 플레이어 생성을 담당
@@ -78,8 +78,8 @@
 
 </details>
 
-<details>
-  <summary>컨트롤 스크립트</summary>
+<details open>
+  <summary>컨트롤 스크립트 (접기 / 펼치기)</summary>
 
 - Player_Ctrl
     - 플레이어 캐릭터의 기능(이동 등)을 담당하며 기능에 따른 모듈을 추가하여 관리합니다
@@ -100,8 +100,8 @@
 
 </details>
 
-<details>
-  <summary>모듈형 스크립트</summary>
+<details open>
+  <summary>모듈형 스크립트 (접기 / 펼치기)</summary>
 
 - M_Animation
     - Player_Ctrl에 의해 플레이어 캐릭터에 자동으로 붙으며 캐릭터의 애니메이션을 담당한다
@@ -115,11 +115,11 @@
 </details>
 
 ## 2. 3D 모델링
-<details>
-  <summary>3D 모델링</summary>
+<details open>
+  <summary>3D 모델링 (접기 / 펼치기)</summary>
 
-<details>
-  <summary>캐릭터</summary>
+<details open>
+  <summary>캐릭터 (접기 / 펼치기)</summary>
 
 ![Character](https://github.com/user-attachments/assets/44a3c709-be2d-426d-a4cf-10e3fb059522)
 ![Character Animator](https://github.com/user-attachments/assets/a90feb9d-b31c-4d4f-9a3e-d56c9e4a64b0)
@@ -132,8 +132,8 @@
   
 </details>
 
-<details>
-  <summary>맵</summary>
+<details open>
+  <summary>맵 (접기 / 펼치기)</summary>
   
 ![Map](https://github.com/user-attachments/assets/c5ae206c-37b6-4c52-8f2e-21a230439a80))
 
@@ -142,8 +142,8 @@
 
 </details>
 
-<details>
-  <summary>기타 오브젝트</summary>
+<details open>
+  <summary>기타 오브젝트 (접기 / 펼치기)</summary>
   
 - 의자 및 테이블
 
@@ -165,8 +165,8 @@
 
 
 ## 3. 상호작용
-<details>
-  <summary>상호작용</summary>
+<details open>
+  <summary>상호작용 (접기 / 펼치기)</summary>
 
 ![상호작용 / 준비 완료](https://github.com/user-attachments/assets/afa11d13-0962-4072-84e1-0466ffd929df)
 ![상호작용 / 방 나가기](https://github.com/user-attachments/assets/6b20c330-bbc3-40aa-abd7-84c0948ad250)
@@ -174,19 +174,18 @@
 - 상호작용 오브젝트에는 Interaction_Base를 상속 받은 스크립트와 Collider(Is Trigger = false)컴포넌트를 추가 합니다
 - 상호작용 오브젝트의 Collider와 충돌시 플레이어의 모듈인 M_Interaction에서 OnTriggerEnter가 호출, Interaction_Base를 상속받은 오브젝트 여부 판단, 상속을 받았다면 M_Interaction.NowInteraction에 저장합니다.
 - 플레이어가 상호작용키(F) 입력 시 M_Interaction.NowInteraction의 null 여부를 판단 후 null이 아니라면 NowInteraction.UseInteraction()을 호출하여 상호작용이 진행됩니다
-<details>
-  <summary>상호작용 흐름 이미지</summary>
+<details open>
+  <summary>상호작용 흐름 이미지 (접기 / 펼치기)</summary>
   
 ![상호작용 흐름 이미지](https://github.com/user-attachments/assets/3e0db867-5402-4cc8-9e56-727c9a93dce2)
 
 </details>
 
-</details>
 
 
 ## 4. 보드게임
-<details>
-  <summary>보드게임</summary>
+<details open>
+  <summary>보드게임 (접기 / 펼치기)</summary>
 
 ** 게임 시작 **
 
@@ -242,8 +241,9 @@
 
 
 ## 5. 카메라 관리
-<details>
-  <summary>카메라 관리</summary>
+<details open>
+
+  <summary>카메라 관리 (접기 / 펼치기)</summary>
 
 - 주사위 야추 프로젝트에서의 카메라는 Cinemachine의 Virtual Camera를 이용하여 카메라를 이동시키며 Camera_Mgr를 이용하여 제어하고 있습니다.
   
@@ -257,8 +257,8 @@
 
 
 ## 6. UI
-<details>
-  <summary>UI</summary>
+<details open>
+  <summary>UI (접기 / 펼치기)</summary>
 
 
 <img width="749" height="420" alt="image" src="https://github.com/user-attachments/assets/b022b12e-3836-4bdc-a6d9-c902d5d500b7" />
@@ -332,8 +332,8 @@
 
 
 ## 7. 멀티 플레이 동기화
-<details>
-  <summary>멀티 플레이 동기화</summary>
+<details open>
+  <summary>멀티 플레이 동기화 (접기 / 펼치기)</summary>
   
 **해당 프로젝트는 Photon PUN2 기반으로 모든 플레이어의 게임 진행을 실시간으로 공유하며 멀티플레이를 구현했습니다**
 
